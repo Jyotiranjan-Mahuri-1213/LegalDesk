@@ -35,7 +35,7 @@
 
     <label>Full Name:</label>
     <br>
-    <input type="text" name="fullName" required>
+    <input type="text" name="name" required>
     <br><br>
 
     <label>Email:</label>

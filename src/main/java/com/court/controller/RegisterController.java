@@ -28,7 +28,17 @@ public class RegisterController extends HttpServlet {
             HttpServletResponse response)
             throws ServletException, IOException {
 
+        System.out.println("========== REGISTRATION DEBUG ==========");
+        System.out.println("Request URI: " + request.getRequestURI());
+        System.out.println("Request Method: " + request.getMethod());
+        System.out.println("Content Type: " + request.getContentType());
+        System.out.println("Parameter Names: " +
+                java.util.Collections.list(request.getParameterNames()));
+        System.out.println("Name Parameter: " + request.getParameter("name"));
+        System.out.println("=========================================");
+
         String name = request.getParameter("name");
+        System.out.println("Name received from form: " + name);
         String email = request.getParameter("email");
         String password = request.getParameter("password");
         String mobileNo = request.getParameter("mobileNo");
@@ -60,6 +70,8 @@ public class RegisterController extends HttpServlet {
         }
 
         System.out.println("Registration request received");
+        System.out.println("Name stored in User object: " + user.getName());
+
         boolean registered = userDAO.registerUser(user);
 
         System.out.println("Registration result: " + registered);

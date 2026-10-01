@@ -12,14 +12,14 @@ public class UserDAO {
 
     public boolean registerUser(User user) {
 
-        String sql = "insert into users (name, email, password, mobile_no, role, status, verification_status, verification_remarks) values (?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO users " +
+                "(name, email, password, mobile_no, role, status, verification_status, verification_remarks) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
-        try {
-                DriverManager.getConnection("com.mysql.cj.jdbc.Driver");
-            System.out.println("MySQL Driver: " +
-                    com.mysql.cj.jdbc.Driver.class.getName());
-                Connection con = DBConnection.getConnection();
-             PreparedStatement ps = con.prepareStatement(sql);
+        try (Connection con = DBConnection.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+
+            System.out.println("MySQL connection established");
 
             ps.setString(1, user.getName());
             ps.setString(2, user.getEmail());
@@ -30,11 +30,17 @@ public class UserDAO {
             ps.setString(7, user.getVerificationStatus());
             ps.setString(8, user.getVerificationRemarks());
 
-            return ps.executeUpdate() > 0;
+            int rows = ps.executeUpdate();
+
+            System.out.println("Rows inserted: " + rows);
+
+            return rows > 0;
 
         } catch (Exception e) {
+
             System.out.println("Registration database error:");
             e.printStackTrace();
+
             return false;
         }
     }
