@@ -12,6 +12,7 @@ public class DBConnection {
     private static final String password = "Jyoti@2004";
 
     public static Connection getConnection() throws Exception {
+        Class.forName("com.mysql.cj.jdbc.Driver");
 
         return DriverManager.getConnection(url,user,password);
     }
@@ -19,6 +20,7 @@ public class DBConnection {
     public static void main(String[] args) {
 
         try {
+
 
             Connection connection = getConnection();
 

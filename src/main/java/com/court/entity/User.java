@@ -9,6 +9,8 @@ public class User {
     private String mobileNo;
     private String role;
     private String status;
+    private String verificationStatus;
+    private String verificationRemarks;
 
     public User() {
     }
@@ -67,6 +69,22 @@ public class User {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getVerificationStatus() {
+        return verificationStatus;
+    }
+
+    public void setVerificationStatus(String verificationStatus) {
+        this.verificationStatus = verificationStatus;
+    }
+
+    public String getVerificationRemarks() {
+        return verificationRemarks;
+    }
+
+    public void setVerificationRemarks(String verificationRemarks) {
+        this.verificationRemarks = verificationRemarks;
     }
 
     public User(int id, String name, String email, String password, String mobileNo, String role, String status) {

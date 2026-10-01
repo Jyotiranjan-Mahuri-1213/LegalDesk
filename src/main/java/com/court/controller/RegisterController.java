@@ -34,6 +34,14 @@ public class RegisterController extends HttpServlet {
         String mobileNo = request.getParameter("mobileNo");
         String role = request.getParameter("role");
 
+        if (!"LAWYER".equals(role) && !"LITIGANT".equals(role)) {
+            response.sendError(
+                    HttpServletResponse.SC_FORBIDDEN,
+                    "Invalid registration role"
+            );
+            return;
+        }
+
         User user = new User();
 
         user.setName(name);
@@ -43,15 +51,28 @@ public class RegisterController extends HttpServlet {
         user.setRole(role);
         user.setStatus("ACTIVE");
 
+        if ("LAWYER".equals(role)) {
+            user.setVerificationStatus("PENDING");
+            user.setVerificationRemarks("Awaiting Admin verification");
+        } else {
+            user.setVerificationStatus("NOT_REQUIRED");
+            user.setVerificationRemarks(null);
+        }
+
+        System.out.println("Registration request received");
         boolean registered = userDAO.registerUser(user);
 
+        System.out.println("Registration result: " + registered);
+
         if (registered) {
-
-            response.sendRedirect("login.jsp");
-
+            System.out.println("Registration successful");
+            response.sendRedirect(
+                    request.getContextPath() + "/login.jsp?registered=true"
+            );
         } else {
-
-            response.sendRedirect("register.jsp?error=failed");
+            System.out.println("Registration failed in UserDAO");
+            response.sendRedirect(
+                    request.getContextPath() + "/register.jsp?error=failed");
         }
     }
 }
