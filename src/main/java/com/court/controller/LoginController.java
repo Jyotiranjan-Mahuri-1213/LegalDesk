@@ -2,7 +2,6 @@ package com.court.controller;
 
 import com.court.dao.UserDAO;
 import com.court.entity.User;
-
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -15,17 +14,11 @@ import java.io.IOException;
 @WebServlet("/login")
 public class LoginController extends HttpServlet {
 
-    private UserDAO userDAO;
+    private final UserDAO userDAO = new UserDAO();
 
     @Override
-    public void init() {
-        userDAO = new UserDAO();
-    }
-
-    @Override
-    protected void doPost(
-            HttpServletRequest request,
-            HttpServletResponse response)
+    protected void doPost(HttpServletRequest request,
+                          HttpServletResponse response)
             throws ServletException, IOException {
 
         String email = request.getParameter("email");
@@ -44,15 +37,11 @@ public class LoginController extends HttpServlet {
 
             session.setMaxInactiveInterval(30 * 60);
 
-            response.sendRedirect(
-                    request.getContextPath() + "/dashboard.jsp"
-            );
+            response.sendRedirect("dashboard.jsp");
 
         } else {
 
-            response.sendRedirect(
-                    request.getContextPath() + "/login.jsp?error=failed"
-            );
+            response.sendRedirect("login.jsp?error=failed");
         }
     }
 }

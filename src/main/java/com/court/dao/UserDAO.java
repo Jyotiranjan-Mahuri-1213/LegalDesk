@@ -46,14 +46,11 @@ public class UserDAO {
     }
     public User loginUser(String email, String password) {
 
-        String sql = " select * from users where email = ? and password = ? and status = 'ACTIVE' )";
+        String sql = "SELECT * FROM users " +
+                "WHERE email = ? AND password = ? AND status = 'ACTIVE'";
 
-        try {
-            DriverManager.getConnection("com.mysql.cj.jdbc.driver");
-            Connection connection = DBConnection.getConnection();
-
-            PreparedStatement ps =
-                    connection.prepareStatement(sql);
+        try (Connection connection = DBConnection.getConnection();
+             PreparedStatement ps = connection.prepareStatement(sql)) {
 
             ps.setString(1, email);
             ps.setString(2, password);
@@ -71,23 +68,22 @@ public class UserDAO {
                 user.setMobileNo(rs.getString("mobile_no"));
                 user.setRole(rs.getString("role"));
                 user.setStatus(rs.getString("status"));
-
-                rs.close();
-                ps.close();
-                connection.close();
+                user.setVerificationStatus(
+                        rs.getString("verification_status")
+                );
+                user.setVerificationRemarks(
+                        rs.getString("verification_remarks")
+                );
 
                 return user;
             }
 
-            rs.close();
-            ps.close();
-            connection.close();
-
         } catch (Exception e) {
-            System.out.println("Registration database error:");
+            System.out.println("Login database error:");
             e.printStackTrace();
         }
 
         return null;
     }
+
 }
