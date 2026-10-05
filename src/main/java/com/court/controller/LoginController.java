@@ -37,7 +37,11 @@ public class LoginController extends HttpServlet {
 
             session.setMaxInactiveInterval(30 * 60);
 
-            response.sendRedirect("dashboard.jsp");
+            if ("ADMIN".equals(user.getRole())) {
+                response.sendRedirect("admin/dashboard.jsp");
+            } else {
+                response.sendRedirect("dashboard.jsp");
+            }
 
         } else {
 
