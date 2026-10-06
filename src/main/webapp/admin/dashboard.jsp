@@ -318,8 +318,6 @@
 <!-- Sidebar -->
 
 <div class="sidebar">
-
-    ```
     <div class="logo">
         <h1>LegalDesk</h1>
         <p>Legal Case Management</p>
@@ -380,7 +378,7 @@
 
             <div class="stat-card">
                 <p>Total Users</p>
-                <h2>0</h2>
+                <h2>${totalUsers}</h2>
                 <span>System users</span>
             </div>
 
