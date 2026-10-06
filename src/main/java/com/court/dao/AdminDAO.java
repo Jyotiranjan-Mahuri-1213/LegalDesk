@@ -37,17 +37,82 @@ public class AdminDAO {
 
 
 
-    public List<User> getPendingLawyers() {
+    public int getPendingLawyersCount() {
 
-        List<User> lawyers = new ArrayList<>();
+        String sql = "select count(*) from users where role = 'LAWYER' and verification_status = 'PENDING' ";
 
-        String sql = "select * from users where role = 'LAWYER' and verification_status = 'PENDING'";
-
-        try{
+        try {
             Connection connection = DBConnection.getConnection();
 
              PreparedStatement ps = connection.prepareStatement(sql);
              ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+
+        } catch (Exception e) {
+            System.out.println("Error getting pending lawyers count:");
+            e.printStackTrace();
+        }
+
+        return 0;
+    }
+
+    public boolean approveLawyer(int userId) {
+
+        String sql = "update users set verification_status = 'APPROVED', verification_remarks = 'Approved by Admin' where id = ? AND role = 'LAWYER'";
+
+        try {
+            Connection connection = DBConnection.getConnection();
+
+             PreparedStatement ps = connection.prepareStatement(sql) ;
+
+            ps.setInt(1, userId);
+
+            return ps.executeUpdate() > 0;
+
+        } catch (Exception e) {
+            System.out.println("Error approving lawyer:");
+            e.printStackTrace();
+        }
+
+        return false;
+    }
+
+
+    public boolean rejectLawyer(int userId) {
+
+        String sql = "update users set verification_status = 'REJECTED', verification_remarks = 'Rejected by Admin' WHERE id = ? AND role = 'LAWYER'";
+
+        try {
+            Connection connection = DBConnection.getConnection();
+
+             PreparedStatement ps = connection.prepareStatement(sql);
+
+            ps.setInt(1, userId);
+
+            return ps.executeUpdate() > 0;
+
+        } catch (Exception e) {
+            System.out.println("Error rejecting lawyer:");
+            e.printStackTrace();
+        }
+
+        return false;
+    }
+
+    public List<User> getPendingLawyers() {
+
+        List<User> lawyers = new ArrayList<>();
+
+        String sql = "SELECT * FROM users " +
+                "WHERE role = 'LAWYER' " +
+                "AND verification_status = 'PENDING'";
+
+        try (Connection connection = DBConnection.getConnection();
+             PreparedStatement ps = connection.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
 
             while (rs.next()) {
 

@@ -384,7 +384,7 @@
 
             <div class="stat-card">
                 <p>Pending Lawyers</p>
-                <h2>0</h2>
+                <h2>${pendingLawyers}</h2>
                 <span>Awaiting verification</span>
             </div>
 
