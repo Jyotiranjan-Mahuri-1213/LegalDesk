@@ -17,7 +17,7 @@ public class LitigantDashboardController extends HttpServlet {
                          HttpServletResponse response)
             throws ServletException, IOException {
 
-        request.getRequestDispatcher("/dashboard.jsp")
+        request.getRequestDispatcher("/litigant/dashboard.jsp")
                 .forward(request, response);
     }
 }
