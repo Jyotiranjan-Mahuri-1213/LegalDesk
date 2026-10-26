@@ -61,15 +61,14 @@ public class AdminDAO {
 
     public boolean approveLawyer(int userId) {
 
-        String sql = "update users set verification_status = 'APPROVED', verification_remarks = 'Approved by Admin' where id = ? AND role = 'LAWYER'";
+        String sql = "update users set status = 'ACTIVE', verification_status = 'APPROVED', verification_remarks = 'Approved by Admin' where id = ? and role = 'LAWYER' and verification_status = 'PENDING'";
 
         try {
             Connection connection = DBConnection.getConnection();
 
-             PreparedStatement ps = connection.prepareStatement(sql) ;
+             PreparedStatement ps = connection.prepareStatement(sql);
 
             ps.setInt(1, userId);
-
             return ps.executeUpdate() > 0;
 
         } catch (Exception e) {
@@ -83,7 +82,13 @@ public class AdminDAO {
 
     public boolean rejectLawyer(int userId) {
 
-        String sql = "update users set verification_status = 'REJECTED', verification_remarks = 'Rejected by Admin' WHERE id = ? AND role = 'LAWYER'";
+        String sql = "update users " +
+                "set status = 'INACTIVE', " +
+                "verification_status = 'REJECTED', " +
+                "verification_remarks = 'Rejected by Admin' " +
+                "where id = ? " +
+                "and role = 'LAWYER' " +
+                "and verification_status = 'PENDING'";
 
         try {
             Connection connection = DBConnection.getConnection();
@@ -91,7 +96,6 @@ public class AdminDAO {
              PreparedStatement ps = connection.prepareStatement(sql);
 
             ps.setInt(1, userId);
-
             return ps.executeUpdate() > 0;
 
         } catch (Exception e) {
@@ -101,7 +105,6 @@ public class AdminDAO {
 
         return false;
     }
-
     public List<User> getPendingLawyers() {
 
         List<User> lawyers = new ArrayList<>();
@@ -110,9 +113,10 @@ public class AdminDAO {
                 "WHERE role = 'LAWYER' " +
                 "AND verification_status = 'PENDING'";
 
-        try (Connection connection = DBConnection.getConnection();
+        try {
+            Connection connection = DBConnection.getConnection();
              PreparedStatement ps = connection.prepareStatement(sql);
-             ResultSet rs = ps.executeQuery()) {
+             ResultSet rs = ps.executeQuery() ;
 
             while (rs.next()) {
 

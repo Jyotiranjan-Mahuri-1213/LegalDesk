@@ -327,9 +327,13 @@
 
     <div class="menu">
         <a href="#" class="active">▣ <span>Dashboard</span></a>
-        <a href="#">⚖ <span>Lawyer Verification</span></a>
+        <a href="${pageContext.request.contextPath}/admin/lawyer-verification">
+            ⚖ <span>Lawyer Verification</span>
+        </a>
         <a href="#">👥 <span>User Management</span></a>
-        <a href="#">📁 <span>Case Management</span></a>
+        <a href="${pageContext.request.contextPath}/admin/cases">
+            📁 <span>Case Management</span>
+        </a>
         <a href="#">📅 <span>Hearings</span></a>
         <a href="#">🔔 <span>Notifications</span></a>
         <a href="#">📊 <span>Reports</span></a>
@@ -338,7 +342,7 @@
     <div class="logout">
         <a href="../logout">Logout</a>
     </div>
-    ```
+
 
 </div>
 
@@ -346,7 +350,6 @@
 
 <div class="main">
 
-    ```
     <!-- Top Bar -->
     <div class="topbar">
 
@@ -412,7 +415,9 @@
                 <div class="icon">⚖</div>
                 <h3>Lawyer Verification</h3>
                 <p>Review and manage lawyer registration requests waiting for Admin approval.</p>
-                <a href="#">Manage →</a>
+                <a href="${pageContext.request.contextPath}/admin/lawyer-verification">
+                    Manage →
+                </a>
             </div>
 
             <div class="feature-card">
@@ -423,18 +428,14 @@
             </div>
 
             <div class="feature-card">
-                <div class="icon">📁</div>
-                <h3>Case Management</h3>
-                <p>Monitor registered cases and manage case-related information.</p>
-                <a href="#">Manage →</a>
-            </div>
-
-            <div class="feature-card">
                 <div class="icon">📅</div>
                 <h3>Hearing Management</h3>
                 <p>View scheduled hearings and manage court hearing information.</p>
-                <a href="#">Manage →</a>
+                <a href="${pageContext.request.contextPath}/admin/hearings">
+                    Manage Hearings →
+                </a>
             </div>
+
 
             <div class="feature-card">
                 <div class="icon">🔔</div>
